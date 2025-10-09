@@ -1,15 +1,27 @@
 import numpy as np
 from datetime import datetime
 from config import InformerConfig, FIXED
-#from exp.exp_informer import Exp_Informer
 from exp.exp_informer import Exp_Informer
 from utils.tools import dotdict
-#from utils.tools import dotdict
+import torch
 
 def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple[float, float]:
     """Обучение Informer и возврат MSE, MAE"""
-
+    
     args = dotdict()
+    
+    # GPU конфигурация
+    has_gpu = torch.cuda.is_available()
+    gpu_count = torch.cuda.device_count() if has_gpu else 0
+    
+    args.use_gpu = has_gpu
+    args.use_multi_gpu = gpu_count > 1
+    args.device_ids = list(range(gpu_count)) if has_gpu else []
+    args.devices = ','.join(map(str, args.device_ids)) if has_gpu else ''
+    args.gpu = 0 if has_gpu else None
+    args.use_amp = has_gpu
+    
+    # Базовые параметры
     args.model = 'informer'
     args.data = 'custom'
     args.root_path = './'
@@ -34,12 +46,8 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     args.num_workers = 0
     args.itr = 1
     args.des = 'llm_search'
-    args.use_amp = False
-    args.use_gpu = True
-    args.use_multi_gpu = True
-    args.devices = '0,1'
-    args.device_ids = [0, 1]
-    args.gpu = 0
+    
+    # Параметры модели
     args.d_model = FIXED['d_model']
     args.d_ff = FIXED['d_ff']
     args.d_layers = FIXED['d_layers']
@@ -59,12 +67,6 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     setting = f'llm_pl{pred_len}_{datetime.now().strftime("%H%M%S")}'
     exp.train(setting)
     exp.test(setting)
+    
     metrics = np.load(f'./results/{setting}/metrics.npy')
-    mse, mae = float(metrics[0]), float(metrics[1])
-    
-    # # MOCK: имитация обучения
-    # time.sleep(0.5)
-    # mse = random.uniform(0.1, 0.5)
-    # mae = random.uniform(0.2, 0.6)
-    
-    return mse, mae
+    return float(metrics[0]), float(metrics[1])
