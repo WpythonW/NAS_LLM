@@ -8,7 +8,9 @@ if __name__ == '__main__':
     parser.add_argument('--journal', default='exp.json', help='Имя файла журнала')
     parser.add_argument('--n_batches', type=int, default=15, help='Количество батчей')
     parser.add_argument('--batch_size', type=int, default=2, help='Размер батча')
+    parser.add_argument('--temperature', type=float, default=1, help='Температура для LLM')
+    parser.add_argument('--thinking_budget', type=int, default=2048, help='Thinking budget для LLM')
     
     args = parser.parse_args()
     
-    journal = run_experiment(args.dataset, args.pred_len, args.journal, args.n_batches, args.batch_size)
+    journal = run_experiment(args.dataset, args.pred_len, args.journal, args.n_batches, args.batch_size , args.temperature, args.thinking_budget)

@@ -4,20 +4,23 @@ from google import genai
 from google.genai import types
 from config import InformerConfig, GRID, GEMINI_API_KEY, ListConfigs
 
-def call_llm(prompt: str) -> List[InformerConfig]:
+def call_llm(prompt: str, temperature: float = 1, thinking_budget: int = 2048) -> List[InformerConfig]:
     """Запрос к LLM (Gemini/GPT)"""
     client = genai.Client(api_key=GEMINI_API_KEY)
     #contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
 
     config = types.GenerateContentConfig(
         system_instruction="You are hyperparameter optimizer. Structrly follow rules in prompt.",
-        thinking_config=types.ThinkingConfig(thinking_budget=100),
         response_mime_type="application/json",
         response_schema=ListConfigs,
+        temperature=temperature,
+        thinking_config = types.ThinkingConfig(
+            thinking_budget=thinking_budget,
+        )
     )
 
     response = client.models.generate_content(
-        model="gemini-flash-lite-latest",
+        model="gemini-flash-latest",
         contents=prompt,
         config=config,
     )
