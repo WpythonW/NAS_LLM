@@ -19,7 +19,7 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     args.device_ids = list(range(gpu_count)) if has_gpu else []
     args.devices = ','.join(map(str, args.device_ids)) if has_gpu else ''
     args.gpu = 0 if has_gpu else None
-    args.use_amp = has_gpu
+    args.use_amp = False
     
     # Базовые параметры
     args.model = 'informer'
