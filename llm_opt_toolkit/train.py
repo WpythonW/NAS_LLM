@@ -64,7 +64,9 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     args.freq = args.freq[-1:]
     
     exp = Exp_Informer(args)
-    setting = f'llm_pl{pred_len}_{datetime.now().strftime("%H%M%S")}'    
-    model, mse, mae = exp.train(setting)
-
-    return mse, mae
+    setting = f'llm_pl{pred_len}_{datetime.now().strftime("%H%M%S")}'
+    exp.train(setting)
+    mae, mse = exp.test(setting, flag='val')
+    
+    #metrics = np.load(f'./results/{setting}/metrics.npy')
+    return mae, mse

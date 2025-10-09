@@ -192,8 +192,8 @@ class Exp_Informer(Exp_Basic):
         
         return self.model
 
-    def test(self, setting):
-        test_data, test_loader = self._get_data(flag='test')
+    def test(self, setting, flag='test'):
+        test_data, test_loader = self._get_data(flag=flag)
         
         self.model.eval()
         
@@ -225,7 +225,7 @@ class Exp_Informer(Exp_Basic):
         np.save(folder_path+'pred.npy', preds)
         np.save(folder_path+'true.npy', trues)
 
-        return
+        return mae, mse
 
     def predict(self, setting, load=False):
         pred_data, pred_loader = self._get_data(flag='pred')
