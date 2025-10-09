@@ -1,11 +1,10 @@
 import numpy as np
 from datetime import datetime
 from config import InformerConfig, FIXED
-import sys
-from pathlib import Path
-
+#from exp.exp_informer import Exp_Informer
 from exp.exp_informer import Exp_Informer
 from utils.tools import dotdict
+#from utils.tools import dotdict
 
 def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple[float, float]:
     """Обучение Informer и возврат MSE, MAE"""
