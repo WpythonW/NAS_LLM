@@ -2,10 +2,10 @@ from datetime import datetime
 import argparse
 import numpy as np
 import pandas as pd
-from src.optimization_journal import Journal
-from src.llm_requests import call_llm
-from src.train import train_informer
-from src.prompting import build_prompt
+from llm_opt_toolkit.optimization_journal import Journal
+from llm_opt_toolkit.llm_requests import call_llm
+from llm_opt_toolkit.train import train_informer
+from llm_opt_toolkit.prompting import build_prompt
 
 def print_comparison_table(results):
     # Фильтруем и создаём DataFrame
