@@ -22,6 +22,7 @@ class ListConfigs(BaseModel):
 
 @dataclass
 class InformerConfig:
+    hypothesis: str
     seq_len: int
     label_len: int
     e_layers: int
