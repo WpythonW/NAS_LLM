@@ -9,6 +9,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 @dataclass
 class Config(BaseModel):
+    hypothesis: str
     seq_len: int
     label_len: int
     e_layers: int

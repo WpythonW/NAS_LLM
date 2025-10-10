@@ -6,22 +6,6 @@ from .llm_requests import call_llm
 from .train import train_informer
 from .prompting import build_prompt
 
-def print_comparison_table(results):
-    # Фильтруем и создаём DataFrame
-    df = pd.DataFrame([r for r in results if r])
-    
-    # Формируем строку конфигурации
-    df['config'] = df[['seq_len', 'label_len', 'e_layers', 'n_heads', 'factor']].astype(int).astype(str).agg('/'.join, axis=1)
-    
-    # Выбираем колонки и сортируем
-    df = df[['pred_len', 'mse', 'mae', 'config']].sort_values('pred_len')
-    
-    # Выводим таблицу
-    print(f"\n{'='*80}\nРЕЗУЛЬТАТЫ\n{'='*80}")
-    print(df.to_markdown(index=False, floatfmt=".4f"))
-    print(f"{'='*80}\n")
-
-
 def run_experiment(dataset_path, pred_len: int, journal_name: str, 
                    n_batches: int = 3, batch_size: int = 5, 
                    temperature: float = 1, thinking_budget: int = 2048) -> Journal:

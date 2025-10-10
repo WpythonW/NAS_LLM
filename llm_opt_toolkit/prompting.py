@@ -1,6 +1,4 @@
 def build_prompt(pred_len: int, batch_size: int, history_md: str) -> str:
-    #min_seq = 8  # 2^(6-1) для max e_layers=6
-    
     return f"""
 Подбери {batch_size} РАЗНЫХ конфигураций для pred_len={pred_len}ч.
 
@@ -19,8 +17,10 @@ def build_prompt(pred_len: int, batch_size: int, history_md: str) -> str:
 
 {history_md}
 
+Для каждой конфигурации сформулируй гипотезу: почему именно эти параметры могут улучшить результат с учетом истории экспериментов.
+
 Верни JSON массив:
-{{"lisf_of_configs": [{{"seq_len": <>, "label_len": <>, "e_layers": <>, "n_heads": <>, "factor": <>}}]}}
+{{"list_of_configs": [{{"hypothesis": "<обоснование выбора параметров>", "seq_len": <>, "label_len": <>, "e_layers": <>, "n_heads": <>, "factor": <>}}]}}
 """
 
 # 2. seq_len >= {min_seq}

@@ -48,8 +48,27 @@ class Journal:
         if not self.entries:
             return ""
         
-        df = pd.DataFrame(self.entries[-last_n:])[['seq_len', 'label_len', 'e_layers', 'n_heads', 'factor', 'mse', 'mae']]
-        return "\n" + df.to_markdown(index=False, floatfmt=".4f") + "\n"
+        df = pd.DataFrame(self.entries[-last_n:]).drop(columns=['trial', 'timestamp'])
+        
+        top3_mse = df.nsmallest(3, 'mse')
+        top3_mae = df.nsmallest(3, 'mae')
+        worst3_mse = df.nlargest(3, 'mse')
+        worst3_mae = df.nlargest(3, 'mae')
+        
+        tables = [
+            "\n### История последних экспериментов",
+            df.to_markdown(index=False, floatfmt=".4f"),
+            "\n### Топ 3 по MSE",
+            top3_mse.to_markdown(index=False, floatfmt=".4f"),
+            "\n### Топ 3 по MAE",
+            top3_mae.to_markdown(index=False, floatfmt=".4f"),
+            "\n### Худшие 3 по MSE",
+            worst3_mse.to_markdown(index=False, floatfmt=".4f"),
+            "\n### Худшие 3 по MAE",
+            worst3_mae.to_markdown(index=False, floatfmt=".4f")
+        ]
+        
+        return "\n".join(tables) + "\n"
     
     def count_trials(self) -> int:
         return len(self.entries)
