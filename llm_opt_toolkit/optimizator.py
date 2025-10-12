@@ -31,7 +31,7 @@ def run_experiment(dataset_path, pred_len: int, journal_name: str,
         measures = train_informer(dataset_path, cfg, pred_len)
         journal.add(cfg, measures, trial_num)
         
-        print(f"→ MSE={measures['mse']:.4f} MAE={measures['mae']:.4f}\n")
+        print(f"→ MSE_val={measures['mse_val']:.4f} MAE_val={measures['mae_val']:.4f}\n")
         
         if (idx + 1) % batch_size == 0:
             print(f"{'-'*60}")

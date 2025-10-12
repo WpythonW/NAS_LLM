@@ -66,7 +66,8 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     exp = Exp_Informer(args)
     setting = f'llm_pl{pred_len}_{datetime.now().strftime("%H%M%S")}'
     exp.train(setting)
-    mae, mse = exp.test(setting, flag='val')
+    mae_val, mse_val = exp.test(setting, flag='val')
+    mae_test, mse_test = exp.test(setting, flag='test')
     
     #metrics = np.load(f'./results/{setting}/metrics.npy')
-    return {'mse': mse, 'mae': mae}
+    return {'mae_val': mae_val, 'mse_val': mse_val, 'mae_test': mae_test, 'mse_test': mse_test}
