@@ -18,7 +18,7 @@ def build_prompt(pred_len: int, batch_size: int, history_md: str) -> str:
 | label_len | Start token length of Informer decoder|
 | e_layers | Num of encoder layers|
 | n_heads | Num of heads|
-| factor | The factor parameter controls how many query points are selected for attention computation: u = factor * log(L) top queries are chosen. Smaller values (factor=3) mean faster computation but potential loss of dependencies, while larger values (factor=8-10) capture more dependencies but with diminishing returns |
+| factor | The factor parameter controls how many query points are selected for attention computation: u = factor * log(L) top queries are chosen. Smaller values (factor=3) mean faster computation but potential loss of dependencies, while larger values (factor=8-10) capture more dependencies but with diminishing returns|
 
 
 ОГРАНИЧЕНИЯ:

@@ -69,4 +69,4 @@ def train_informer(dataset_path, config: InformerConfig, pred_len: int) -> tuple
     mae, mse = exp.test(setting, flag='val')
     
     #metrics = np.load(f'./results/{setting}/metrics.npy')
-    return mae, mse
+    return {'mse': mse, 'mae': mae}

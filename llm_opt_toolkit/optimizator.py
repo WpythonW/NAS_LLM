@@ -28,7 +28,7 @@ def run_experiment(dataset_path, pred_len: int, journal_name: str,
         cfg = configs[idx % batch_size]
         print(f"[{trial_num}/{start_trial + total}] seq={cfg.seq_len} lbl={cfg.label_len} e={cfg.e_layers} h={cfg.n_heads} f={cfg.factor} ", end='')
         
-        mse, mae = train_informer(dataset_path, cfg, pred_len)
+        mae, mse = train_informer(dataset_path, cfg, pred_len)
         journal.add(cfg, mse, mae, trial_num)
         
         print(f"→ MSE={mse:.4f} MAE={mae:.4f}\n")

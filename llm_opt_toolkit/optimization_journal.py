@@ -29,15 +29,14 @@ class Journal:
         with open(self.filepath, 'w') as f:
             json.dump(self.entries, f, indent=2)
     
-    def add(self, config, mse: float, mae: float, trial: int):
+    def add(self, config, measures, trial: int):
         if config.label_len >= config.seq_len:
             raise ValueError(f"label_len >= seq_len: {config.label_len} >= {config.seq_len}")
         
         entry = {
             'trial': int(trial),
             'timestamp': datetime.now().isoformat(),
-            'mse': float(mse),
-            'mae': float(mae),
+            **{k: float(v) for k, v in measures.items()},
             **{k: int(v) if isinstance(v, (np.integer, np.int64)) else v 
                for k, v in config.__dict__.items()}
         }
