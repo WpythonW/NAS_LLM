@@ -27,7 +27,7 @@ class Journal:
     
     def _save(self):
         with open(self.filepath, 'w') as f:
-            json.dump(self.entries, f, indent=2)
+            json.dump(self.entries, f, indent=2, ensure_ascii=False)
     
     def add(self, config, measures, trial: int):
         if config.label_len >= config.seq_len:
@@ -47,24 +47,24 @@ class Journal:
         if not self.entries:
             return ""
         
-        df = pd.DataFrame(self.entries[-last_n:]).drop(columns=['trial', 'timestamp'])
+        df = pd.DataFrame(self.entries[-last_n:]).drop(columns=['trial', 'timestamp', 'mse_test', 'mae_test'])
         
-        top3_mse = df.nsmallest(3, 'mse')
-        top3_mae = df.nsmallest(3, 'mae')
-        worst3_mse = df.nlargest(3, 'mse')
-        worst3_mae = df.nlargest(3, 'mae')
+        top3_mse = df.nsmallest(3, 'mse_val')
+        #top3_mae = df.nsmallest(3, 'mae')
+        worst3_mse = df.nlargest(3, 'mse_val')
+        #worst3_mae = df.nlargest(3, 'mae')
         
         tables = [
             "\n### История последних экспериментов",
             df.to_markdown(index=False, floatfmt=".4f"),
             "\n### Топ 3 по MSE",
             top3_mse.to_markdown(index=False, floatfmt=".4f"),
-            "\n### Топ 3 по MAE",
-            top3_mae.to_markdown(index=False, floatfmt=".4f"),
+            #"\n### Топ 3 по MAE",
+            #top3_mae.to_markdown(index=False, floatfmt=".4f"),
             "\n### Худшие 3 по MSE",
             worst3_mse.to_markdown(index=False, floatfmt=".4f"),
-            "\n### Худшие 3 по MAE",
-            worst3_mae.to_markdown(index=False, floatfmt=".4f")
+            #"\n### Худшие 3 по MAE",
+            #worst3_mae.to_markdown(index=False, floatfmt=".4f")
         ]
         
         return "\n".join(tables) + "\n"
