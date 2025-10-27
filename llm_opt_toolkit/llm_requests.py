@@ -3,12 +3,10 @@ from typing import List
 from google import genai
 from google.genai import types
 from config import InformerConfig, GRID, GEMINI_API_KEY, ListConfigs
-
+ 
 def call_llm(prompt: str, temperature: float = 1, thinking_budget: int = 2048) -> List[InformerConfig]:
     """Запрос к LLM (Gemini/GPT)"""
     client = genai.Client(api_key=GEMINI_API_KEY)
-    #contents = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
-
     config = types.GenerateContentConfig(
         system_instruction="You are hyperparameter optimizer. Structrly follow rules in prompt.",
         response_mime_type="application/json",
@@ -18,7 +16,6 @@ def call_llm(prompt: str, temperature: float = 1, thinking_budget: int = 2048) -
             thinking_budget=thinking_budget,
         )
     )
-
     response = client.models.generate_content(
         model="gemini-flash-latest",
         contents=prompt,
