@@ -22,6 +22,7 @@ def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinki
 
     for attempt in range(max_retries):
         try:
+            print('Attempting to call LLM, try', attempt + 1)
             response = client.models.generate_content(
                 model="gemini-flash-latest",
                 contents=prompt,
