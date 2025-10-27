@@ -10,7 +10,11 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=2, help='Размер батча')
     parser.add_argument('--temperature', type=float, default=1, help='Температура для LLM')
     parser.add_argument('--thinking_budget', type=int, default=2048, help='Thinking budget для LLM')
+    parser.add_argument('--expr_num', type=int, default=2048, help='2 или 3 эксперимент(в 3 архитектурные параметры)')
+
     
     args = parser.parse_args()
     
-    journal = run_experiment(args.dataset, args.pred_len, args.journal, args.n_batches, args.batch_size , args.temperature, args.thinking_budget)
+    journal = run_experiment(args.dataset, args.pred_len, args.journal, args.n_batches, 
+                             args.batch_size , args.temperature, args.thinking_budget,
+                             args.expr_num)

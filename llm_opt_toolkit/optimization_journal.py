@@ -49,9 +49,9 @@ class Journal:
         
         df = pd.DataFrame(self.entries[-last_n:]).drop(columns=['trial', 'timestamp', 'mse_test', 'mae_test'])
         
-        top3_mse = df.nsmallest(3, 'mse_val')
+        top3_mse = df.nsmallest(4, 'mse_val')
         #top3_mae = df.nsmallest(3, 'mae')
-        worst3_mse = df.nlargest(3, 'mse_val')
+        worst3_mse = df.nlargest(4, 'mse_val')
         #worst3_mae = df.nlargest(3, 'mae')
         
         tables = [
