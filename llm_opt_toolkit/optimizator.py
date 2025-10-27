@@ -38,7 +38,7 @@ def run_experiment(dataset_path, pred_len: int, journal_name: str, grid_name: st
             print(f"[{trial_num}/{start_trial + total}] {params_str}", end=' ')
             
             # Обучили, занесли в журнал, вывели результат
-            measures = train_informer(dataset_path, train_cfg, pred_len)
+            measures = train_informer(dataset_path, train_cfg)
             journal.add(cfg, measures, trial_num)
             print(f"→ MSE_val={measures['mse_val']:.4f} MAE_val={measures['mae_val']:.4f}\n")
         
