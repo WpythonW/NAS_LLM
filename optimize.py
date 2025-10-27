@@ -5,7 +5,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset_path', required=True, help='Путь к датасету')
     parser.add_argument('--pred_len', type=int, default=24, help='Длина предсказания')
-    parser.add_argument('--journal', default='exp.json', help='Имя файла журнала')
+    parser.add_argument('--journal_name', default='exp.json', help='Имя файла журнала')
     parser.add_argument('--n_batches', type=int, default=15, help='Количество батчей')
     parser.add_argument('--batch_size', type=int, default=2, help='Размер батча')
     parser.add_argument('--temperature', type=float, default=1, help='Температура для LLM')
