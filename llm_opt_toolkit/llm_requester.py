@@ -7,7 +7,7 @@ from google import genai
 from google.genai import types
 from google.genai.errors import ServerError
 from pydantic import BaseModel
-from time import sleep
+import time
 
 def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinking_budget: int = 2048, max_retries: int = 100):
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -29,4 +29,6 @@ def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinki
                 config=config
             )
             return response.parsed.list_of_configs
-        except ServerError as e: raise('WTF model didn-t respond??')
+        
+        except ServerError as e: time.sleep(2)
+            #raise Exception('WTF model didn-t respond??')
