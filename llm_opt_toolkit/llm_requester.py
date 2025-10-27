@@ -1,11 +1,15 @@
-import json
-from typing import List
 from google import genai
 from google.genai import types
 from config import GEMINI_API_KEY
 from pydantic import BaseModel
 
-def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinking_budget: int = 2048):
+from google import genai
+from google.genai import types
+from google.genai.errors import ServerError
+from pydantic import BaseModel
+from time import sleep
+
+def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinking_budget: int = 2048, max_retries: int = 100):
     client = genai.Client(api_key=GEMINI_API_KEY)
     
     config = types.GenerateContentConfig(
@@ -16,10 +20,12 @@ def call_llm(prompt: str, ListConfigs: BaseModel, temperature: float = 1, thinki
         thinking_config=types.ThinkingConfig(thinking_budget=thinking_budget)
     )
 
-    response = client.models.generate_content(
-        model="gemini-flash-latest",
-        contents=prompt,
-        config=config
-    )
-    
-    return response.parsed.list_of_configs
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model="gemini-flash-latest",
+                contents=prompt,
+                config=config
+            )
+            return response.parsed.list_of_configs
+        except ServerError as e: raise('WTF model didn-t respond??')
