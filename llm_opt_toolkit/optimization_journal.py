@@ -76,13 +76,13 @@ class Journal:
         if not self.entries:
             return None
         df = pd.DataFrame(self.entries)
-        return df.loc[df['mse'].idxmin()]
+        return df.loc[df['mse_test'].idxmin()]
     
     def print_best(self):
         best = self.get_best()
         if best is None:
             return
         
-        print(f"\n>>>MSE={best['mse']:.4f} MAE={best['mae']:.4f} "
+        print(f"\n>>>MSE={best['mse_test']:.4f} MAE={best['mae_test']:.4f} "
               f"seq={int(best['seq_len'])} lbl={int(best['label_len'])} e={int(best['e_layers'])} "
               f"h={int(best['n_heads'])} f={int(best['factor'])}\n")
