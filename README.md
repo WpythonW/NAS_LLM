@@ -29,7 +29,7 @@
 	- `train.py` — локальная обёртка для обучения Informer с одной конфигурацией.
 - `experiments/` — записи и журналы проведённых оптимизаций (структура по датасетам и запускам).
 - `results/` — результаты экспериментов (метрики, графики).
-- `image/` — предгенерированные графики/визуализации.
+- `assets/` — графики/визуализации.
 - Jupyter ноутбуки: `analize_result.ipynb`, `nas-informer.ipynb`, `test_functions.ipynb` — примеры использования и анализ результатов.
 
 ## Схема работы
@@ -39,38 +39,34 @@
 
 ### Датасет ETTH1
 <details>
-  <summary>Нажмите, чтобы развернуть</summary>
+  <summary>Графики</summary>
 
-#### Pred Len = 24
-<img src="image/ETTH1_pred_len_24.png" alt="ETTH1_pred_len_24" style="width:60%; height:auto;">
+#### ETTH1: Optuna vs Grid3
+<img src="assets/Graphs/ETTh1_grid3.png" alt="ETTH1_pred_len_24" style="width:80%; height:auto;">
 
-#### Pred Len = 48
-<img src="image/ETTH1_pred_len_48.png" alt="ETTH1_pred_len_48" style="width:60%; height:auto;">
+#### ETTH1: Optuna vs Grid12
+<img src="assets/Graphs/ETTh1_grid12.png" alt="ETTH1_pred_len_48" style="width:80%; height:auto;">
 
-#### Pred Len = 168
-<img src="image/ETTH1_pred_len_168.png" alt="ETTH1_pred_len_168" style="width:60%; height:auto;">
 
 </details>
 
 ### Датасет ETTH2
 <details>
-  <summary>Нажмите, чтобы развернуть</summary>
+  <summary>Графики</summary>
 
-#### Pred Len = 24
-<img src="image/ETTH2_pred_len_24.png" alt="ETTH2_pred_len_24" style="width:60%; height:auto;">
+#### ETTH2: Optuna vs Grid3
+<img src="assets/Graphs/ETTh2_grid3.png" alt="ETTH1_pred_len_24" style="width:80%; height:auto;">
 
-#### Pred Len = 48
-<img src="image/ETTH2_pred_len_48.png" alt="ETTH2_pred_len_48" style="width:60%; height:auto;">
-
-#### Pred Len = 168
-<img src="image/ETTH2_pred_len_168.png" alt="ETTH2_pred_len_168" style="width:60%; height:auto;">
+#### ETTH2: Optuna vs Grid12
+<img src="assets/Graphs/ETTh2_grid12.png" alt="ETTH1_pred_len_48" style="width:80%; height:auto;">
 
 </details>
 
 ## Вывод
-
-> Исходя из графиков видно, что `LLM` может иногда спрогнозировать более оптимальную архитектуру, но `Optuna` будет работать более стабильнее 
-
+1. LLM NAS справился лучше на датасетах ETTh1 и ETTh2 при фиксированном pred_len = 24;
+2. Optuna дала более лучшие результаты на датасете ETTh1 и ETTh2 при pred_len >  24;
+3. Исходя из графиков при поиске с LLM NAS метрика идёт сильными скачками, и мы можем на первых итерациях найти оптимальную архитектуру;
+4. Метрика при Optuna в данной задаче спускается более плавно, по сравнению с LLM NAS
 
 
 ## Быстрый старт
