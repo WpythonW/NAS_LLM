@@ -33,7 +33,7 @@
 - Jupyter ноутбуки: `analize_result.ipynb`, `nas-informer.ipynb`, `test_functions.ipynb` — примеры использования и анализ результатов.
 
 ## Схема работы
-![schema](image/schema.png)
+![schema](assets/schema.png)
 
 ## Результаты тестирования
 
